@@ -1,0 +1,49 @@
+#include<stdio.h>
+int main(){
+	int n_participants,time,winner,n_elements;
+	scanf("%d%d",&n_participants,&time);
+	int  s[n_participants][time+1],row,col,dist[10][10],lead[3];
+	int  max=0,count[3] = {0};
+	for(row=0;row<n_participants;row++){
+	    for(col=0;col<time+1;col++){
+		scanf("%d",&s[row][col]);
+	    }
+	}
+	for(row=0;row<n_participants;row++){
+		int distcovered;
+    	for(col=0;col<time;col++){ 
+    	distcovered = s[row][col]*s[row][time];
+	    if(col==0)
+	    dist[row][col] = 0+distcovered;
+	    else
+        dist[row][col] = dist[row][col-1]+distcovered;
+        } 
+    }
+    int index;
+    for(col=1;col<time-1;col=col+2){
+    	index=1;
+    	for(row=0;row<n_participants;row++){
+    		if(dist[row][col]>max){
+    			max = dist[row][col];
+    			lead[0]=row;
+			}
+			else if(dist[row][col]==max){
+				lead[index] = row;
+				index++;
+			}
+		}
+		n_elements=index;
+		for(index=0;index<n_elements;index++){
+			int value=lead[index];
+			count[value]++;
+		}
+	}
+	max=0;
+	for(row=0;row<n_participants;row++){
+		if(count[row]>=max){
+			winner = row;
+			max = count[row];
+		}
+	}
+	printf("%d",winner+1);
+}
