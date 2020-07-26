@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main(){
+	int n_holes,n_balls,ctr;
+	scanf("%d",&n_holes);
+	int i,j,h[n_holes],hc[n_holes],temp[n_holes]; 
+	for(i=0;i<n_holes;i++){
+		scanf("%d",&h[i]);
+		hc[i] = i+1;
+		temp[i] = hc[i];
+	}
+	scanf("%d",&n_balls);
+	int b[n_balls];
+	for(i=0;i<n_balls;i++){ 
+	    ctr = 0;
+		scanf("%d",&b[i]);
+		for(j=n_holes-1;j>=0;j--){
+			if(b[i]<=h[j] && hc[j]!=0){
+				ctr = 1;
+				hc[j]-=1; 
+				printf("%d ",j+1 ); break;
+			}
+		}
+		if(ctr==0)
+		printf("0 ");
+	}
+	return 0;
+}
