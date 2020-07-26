@@ -1,0 +1,36 @@
+#include<stdio.h>
+int change_pos(int n_monkey,int pos[n_monkey],int s_index[n_monkey],int temp[n_monkey]){
+	int j,i,c=0,t;
+	
+	for(j=0;j<6;j++){ c++;
+	int pos1[n_monkey];
+	for(i=0;i<n_monkey;i++){
+	pos1[pos[i]-1] = temp[i];}
+	for(i=0;i<n_monkey;i++)
+	temp[i] = pos1[i];
+	}
+	t = compare(n_monkey,s_index,temp);
+    if(t==1) printf("%d",c);
+    else change_pos(n_monkey,pos,s_index,temp);
+}
+int compare(int n_monkey,int s_index[n_monkey],int temp[n_monkey]){
+	int i;
+	for(i=0;i<n_monkey;i++)
+    if(s_index[i] == temp[i]) return 1;
+	else return 0;	
+}
+int main(){ 
+    int k,t_cases;
+    scanf("%d",&t_cases);
+    for(k=1;k<=t_cases;k++){ // loop for test cases
+	int n_monkeys;
+	scanf("%d",&n_monkeys);
+	int i,j,pos[n_monkeys],s_index[n_monkeys],temp[n_monkeys];
+    for(i=0;i<n_monkeys;i++){
+    	scanf("%d",&pos[i]);
+    	s_index[i] = i+1; 
+    	temp[i] = s_index[i];
+	}
+	change_pos(n_monkeys,pos,s_index,temp);
+} 
+}
