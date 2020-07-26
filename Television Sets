@@ -1,0 +1,53 @@
+#include<stdio.h>
+int day(int m){
+	if(m == 1||m == 3||m == 5||m == 7||m == 8||m == 10 ||m == 12)
+	return 31;
+	else if(m == 2)
+	return 28;
+	else  
+	return 30;
+}         
+int cal(int patients[365],int t_count,int n,int r1,int r2){
+	int income = 0,day;
+	for(day=0;day<=365;day++){
+		if(patients[day]<(n-t_count))
+		income += patients[day] * r2;
+		else if(patients[day]<n)
+		income += (n-t_count)*r2 + (patients[day]-(n-t_count))*r1;
+		else 
+		income += (n-t_count)*r2 + t_count*r1;
+	}
+	return income;
+}
+int main(){ 
+    int n,r1,r2,revenue;
+    int left,right,mid;
+	scanf("%d%d%d",&n,&r1,&r2);
+    scanf("%d",&revenue);
+	int month = 12,m,d,income;
+	int i,j=0,patients[365]; 
+	for(m=1;m<=month;m++){ 
+	d = day(m);
+	for(i=1;i<=d;i++){
+		patients[j] = (6-m)*(6-m) + abs(i-15);  
+        j++;
+    	}
+    }
+    int t_rooms = n;
+    for(left = 0,right=n;left>=0 && right<=n && left<=right;){
+    	mid = (left+right)/2;
+    	income = cal(patients,mid,n,r1,r2);
+    	if(revenue>income)
+		    left = mid+1;
+		else if(revenue<income){
+		    t_rooms = mid;
+		    right = mid-1;
+		}
+		else if(revenue == income){
+			t_rooms = mid;
+			break;
+		}
+	}
+	printf("%d",t_rooms);
+	return 0;
+}
